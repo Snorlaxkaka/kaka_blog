@@ -12,7 +12,10 @@
     </div>
     <div class="post-container d-flex flex-wrap jc-center ai-center">
       <div v-for="(article, i) in articles" :key="i">
-        <div class="show home-art">
+        <div
+          class="show home-art"
+          :style="{ maxWidth: '450px', maxHeight: '300px', fontSize: '18px' }"
+        >
           <router-link
             tag="div"
             :to="`/article/list/${article._id}`"
@@ -23,21 +26,17 @@
             <router-link
               tag="span"
               :to="`/article/list/${article._id}`"
-              class="fs-xxl jc-center d-flex flex-wrap hand text-grey-1"
+              class="jc-center d-flex flex-wrap hand text-grey-1"
             >
               {{ article.title }}
             </router-link>
-            <div class="d-flex mt-4 p-7 text-grey-1">
+            <div class="d-flex mt-4 p-5 text-grey-1">
               <i class="iconfont icon-riqi2 pr-2"></i>
-              <span class="fs-sm">
-                {{ article.createdAt | date('YYYY-MM-DD') }}
+              <span>
+                {{ article.createdAt | date("YYYY-MM-DD") }}
               </span>
-              <i class="iconfont icon-sort pl-9"></i>
-              <router-link
-                tag="span"
-                :to="`/tags`"
-                class="fs-sm pl-2 mr-6 hand"
-              >
+              <i class="iconfont icon-sort pl-6"></i>
+              <router-link tag="span" :to="`/tags`" class="pl-2 mr-6 hand">
                 {{ article.categories[0].name }}
               </router-link>
               <i class="iconfont icon-love text-red hand"></i>
@@ -153,7 +152,7 @@ export default {
 
 <style lang="scss" scoped>
 .bgImg {
-  background-image: url('../assets/images/bg-blog.jpg');
+  background-image: url("../assets/images/bg-blog.jpg");
   width: 100%;
   height: 100vh;
   background-position: center;
@@ -162,8 +161,8 @@ export default {
   overflow: hidden;
 
   .shouye-text {
-    font-size: 33px;
-    font-family: 'Roboto', sans-serif;
+    font-size: 30px;
+    font-family: "Roboto", sans-serif;
     width: 14em;
     white-space: nowrap;
     animation: typing 2.5s steps(13, end), infinite;
@@ -171,7 +170,7 @@ export default {
   }
   .line-down {
     font-size: 32px;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     animation: shine 0.5s linear infinite alternate;
   }
   .arrow-down {
@@ -226,8 +225,8 @@ export default {
   max-width: 1024px;
   margin: 0 auto;
   .top {
-    width: 270px;
-    height: 250px;
+    width: 25px;
+    height: 25px;
   }
 }
 @media screen and (max-width: 768px) {

@@ -6,7 +6,7 @@
         <div class="text-green fs-xxxxl mt-11">{{ model.title }}</div>
         <div class="text-grey-2 d-flex fs-sm my-4">
           <p class="mr-4">
-            {{ model.createdAt | date('YYYY-MM-DD HH:mm:ss') }}
+            {{ model.createdAt | date("YYYY-MM-DD ") }}
           </p>
           <p class="mr-4">字数 {{ model.body.length }}</p>
           <p>评论 {{ Comments.length }}</p>
@@ -108,7 +108,7 @@ export default {
   props: {
     id: { required: true },
   },
-  data() {
+  data () {
     return {
       model: null,
       Comments: [],
@@ -120,7 +120,7 @@ export default {
     id: 'fetch',
   },
   methods: {
-    async fetch() {
+    async fetch () {
       const res = await this.$http.get(`articles/list/${this.id}`)
       this.model = res.data
       let tocData = Toc(marked(res.data.body))
@@ -131,7 +131,7 @@ export default {
         // this.addCodeSupport()
       })
     },
-    scrollTo(id) {
+    scrollTo (id) {
       // 绑定 toc 点击事件
       let node = document.querySelector('[data-id="' + id + '"]')
       if (!node) {
@@ -143,7 +143,7 @@ export default {
         inline: 'nearest',
       })
     },
-    async getBlogsComments() {
+    async getBlogsComments () {
       const res = await this.$http.get(`/comments/${this.id}`)
       const blogsComments = res.data
       this.parentComments = blogsComments.filter(
@@ -155,14 +155,14 @@ export default {
       this.Comments = res.data
     },
   },
-  mounted() {
+  mounted () {
     this.fetch()
     this.getBlogsComments()
   },
 }
 </script>
 <style lang="scss" scoped>
-@import '../assets/scss/variables';
+@import "../assets/scss/variables";
 
 #content {
   line-height: 1.8;
@@ -176,8 +176,8 @@ export default {
 }
 
 .post-tags:hover {
-  background-color: map-get($colors, 'border');
-  color: map-get($colors, 'grey');
+  background-color: map-get($colors, "border");
+  color: map-get($colors, "grey");
 }
 
 .left {
@@ -190,7 +190,7 @@ export default {
   margin-top: 205px;
   .menu-title {
     padding: 6px 0;
-    color: map-get($colors, 'green-1');
+    color: map-get($colors, "green-1");
     &:hover {
       text-decoration: underline;
     }

@@ -44,9 +44,7 @@
                       :to="`/archives`"
                       :data-hover="getDataHover(tag.categories.createdAt)"
                     >
-                      {{
-                        tag.categories.createdAt | date('YYYY-MM-DD HH:mm:ss')
-                      }}
+                      {{ tag.categories.createdAt | date("YYYY-MM-DD") }}
                     </router-link>
                     <router-link
                       class="text-grey-1"
