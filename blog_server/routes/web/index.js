@@ -1,34 +1,34 @@
 module.exports = app => {
-  const router = require("express").Router();
-  const mongoose = require("mongoose");
-  const sendEmail = require('../../plugins/sendEmail.js');
-  const Article = mongoose.model("Article");
-  const Link = mongoose.model("Link");
-  const Category = mongoose.model("Category");
-  const Comment = mongoose.model("Comment");
-  const Message = mongoose.model("Message");
-  const User = mongoose.model("User");
+  const router = require("express").Router()
+  const mongoose = require("mongoose")
+  const sendEmail = require('../../plugins/sendEmail.js')
+  const Article = mongoose.model("Article")
+  const Link = mongoose.model("Link")
+  const Category = mongoose.model("Category")
+  const Comment = mongoose.model("Comment")
+  const Message = mongoose.model("Message")
+  const User = mongoose.model("User")
 
   // 文章列表
   router.get("/articles/list", async (req, res) => {
     const data = await Article.find().sort({
       'createdAt': -1
-    });
-    res.send(data);
-  });
+    })
+    res.send(data)
+  })
 
   // 最近
   router.get("/articles/recent", async (req, res) => {
     const data = await Article.find()
       .sort({
         'createdAt': -1
-      }).limit(4);
-    res.send(data);
-  });
+      }).limit(4)
+    res.send(data)
+  })
 
   // 获取指定页码的文章
   router.get('/articles/:pageNum', async (req, res) => {
-    const currentPage = req.params.pageNum;
+    const currentPage = req.params.pageNum
     const list = await Article.find().sort({
       'createdAt': -1
     }).skip((currentPage - 1) * 6).limit(6).populate('categories')
@@ -44,11 +44,13 @@ module.exports = app => {
 
   // 按照年月进行归类后的数据
   router.get('/archive', async (req, res) => {
-    const data = await Article.aggregate([{
+    const data = await Article.aggregate([
+      {
         $sort: {
           createdAt: -1
         }
-      }, {
+      },
+      {
         $lookup: {
           from: 'categories',
           localField: 'categories',
@@ -59,7 +61,8 @@ module.exports = app => {
       {
         $group: {
           _id: {
-            $month: '$createdAt',
+            year: { $year: '$createdAt' },
+            month: { $month: '$createdAt' }
           },
           count: {
             $sum: 1
@@ -74,9 +77,13 @@ module.exports = app => {
           }
         }
       },
-    ]).sort({
-      '_id': -1,
-    })
+      {
+        $sort: {
+          '_id.year': -1,
+          '_id.month': -1
+        }
+      }
+    ])
     res.send(data)
   })
 
@@ -113,15 +120,15 @@ module.exports = app => {
 
   // 文章详情
   router.get("/articles/list/:id", async (req, res) => {
-    const data = await Article.findById(req.params.id).populate('categories');
-    res.send(data);
-  });
+    const data = await Article.findById(req.params.id).populate('categories')
+    res.send(data)
+  })
 
   // links
   router.get("/links/list", async (req, res) => {
-    const data = await Link.find();
-    res.send(data);
-  });
+    const data = await Link.find()
+    res.send(data)
+  })
 
   // 用户
   router.post('/users', async (req, res) => {
@@ -188,5 +195,5 @@ module.exports = app => {
     })
   })
 
-  app.use("/web/api", router);
-};
+  app.use("/web/api", router)
+}

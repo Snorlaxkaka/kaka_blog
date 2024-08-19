@@ -1,5 +1,6 @@
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const path = require('path')
 
 module.exports = {
@@ -40,6 +41,8 @@ module.exports = {
           //   //   renderAfterDocumentEvent: 'render-event'
           //   // })
           // }),
+          // CleanWebpackPlugin: 清理输出目录
+          new CleanWebpackPlugin(),
           new CompressionWebpackPlugin({
             algorithm: 'gzip',
             test: new RegExp(`\\.(${productionGzipExtensions.join('|')})$`),

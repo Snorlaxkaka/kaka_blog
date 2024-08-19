@@ -100,7 +100,6 @@ export default {
   width: 100%;
   bottom: 0;
   left: 0;
-  margin-top: -21vh;
 }
 .bg-foot {
   background-color: #020003;

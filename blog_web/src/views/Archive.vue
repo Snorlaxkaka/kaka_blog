@@ -3,7 +3,7 @@
     <div class="main-content archive-page">
       <div class="categorys-item mt-6" v-for="item in model" :key="item._id">
         <div class="categorys-title">
-          {{ item.list[0].createdAt | date('YYYY') }}年{{ item._id }}月
+          {{ item.list[0].createdAt | date("YYYY") }}年{{ item._id.month }}月
         </div>
         <div class="post-lists">
           <div class="post-lists-body">
@@ -17,9 +17,9 @@
                   {{
                     article.categories
                       .map((cat) => {
-                        return cat.title
+                        return cat.title;
                       })
-                      .join('|')
+                      .join("|")
                   }}
                 </div>
                 <div class="item-label bg-postcolor">
@@ -33,14 +33,14 @@
                   </div>
                   <div class="item-meta">
                     <div class="item-meta-date">
-                      {{ article.createdAt | date('YYYY-MM-DD HH:mm:ss') }}
+                      {{ article.createdAt | date("YYYY-MM-DD ") }}
                       <router-link
                         class="text-grey-1"
                         :to="`/tags`"
                         :data-hover="
                           article.categories
                             .map((cat) => {
-                              return cat.name
+                              return cat.name;
                             })
                             .join('|')
                         "
@@ -48,9 +48,9 @@
                         {{
                           article.categories
                             .map((cat) => {
-                              return cat.name
+                              return cat.name;
                             })
-                            .join('|')
+                            .join("|")
                         }}
                       </router-link>
                     </div>
@@ -67,18 +67,18 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       model: [],
     }
   },
   methods: {
-    async getArchive() {
+    async getArchive () {
       const res = await this.$http.get('/archive')
       this.model = res.data
     },
   },
-  mounted() {
+  mounted () {
     this.getArchive()
   },
 }
