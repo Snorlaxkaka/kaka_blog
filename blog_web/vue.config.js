@@ -5,7 +5,7 @@ const path = require('path')
 
 module.exports = {
   lintOnSave: false,
-  outputDir: 'docs',
+  outputDir: 'blog-web',
   // publicPath: process.env.NODE_ENV === 'production' ? '/web' : '/'
   productionSourceMap: false,
   chainWebpack: (config) => {
