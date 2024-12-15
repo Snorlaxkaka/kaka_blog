@@ -8,18 +8,14 @@ module.exports = (app) => {
     mergeParams: true,
   })
   const { upload, cosfun } = require('../../middleware/cos.js')
-
-  //新建 博客或者类别
   router.post('/', async (req, res) => {
     const model = await req.Model.create(req.body)
     res.send(model)
   })
-  // 更新 博客或者类别
   router.put('/:id', async (req, res) => {
     const model = await req.Model.findByIdAndUpdate(req.params.id, req.body)
     res.send(model)
   })
-  // 删除 博客或者类别
   router.delete('/:id', async (req, res) => {
     await req.Model.findByIdAndDelete(req.params.id, req.body)
     res.send({
@@ -88,8 +84,7 @@ module.exports = (app) => {
   //   }
   // )
 
-
-  // 注册
+  // 第一次登录把注册注释取消
   app.post('/admin/api/register', async (req, res) => {
     const user = await AdminUser.create({
       username: req.body.username,
@@ -118,7 +113,7 @@ module.exports = (app) => {
       username,
     })
   })
-  //邮件
+
   app.post('/admin/api/email', async (req, res) => {
     sendEmail(req.body)
     res.send({
