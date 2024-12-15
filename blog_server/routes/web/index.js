@@ -9,7 +9,7 @@ module.exports = app => {
   const Message = mongoose.model("Message")
   const User = mongoose.model("User")
 
-  // 文章列表
+  // 获取文章列表
   router.get("/articles/list", async (req, res) => {
     const data = await Article.find().sort({
       'createdAt': -1
@@ -17,7 +17,7 @@ module.exports = app => {
     res.send(data)
   })
 
-  // 最近
+  // 获取最近文章
   router.get("/articles/recent", async (req, res) => {
     const data = await Article.find()
       .sort({
@@ -29,11 +29,12 @@ module.exports = app => {
   // 获取指定页码的文章
   router.get('/articles/:pageNum', async (req, res) => {
     const currentPage = req.params.pageNum
+    const articlesPerPage = 24 // 每页显示的文章数
     const list = await Article.find().sort({
       'createdAt': -1
-    }).skip((currentPage - 1) * 6).limit(6).populate('categories')
+    }).skip((currentPage - 1) * articlesPerPage).limit(articlesPerPage).populate('categories')
     const count = await Article.find().lean().countDocuments()
-    const totalPage = Math.ceil(count / 6)
+    const totalPage = Math.ceil(count / articlesPerPage)
     res.send({
       list,
       totalArticles: count,
@@ -87,7 +88,7 @@ module.exports = app => {
     res.send(data)
   })
 
-  // 标签
+  // 获取标签类别
   router.get('/tags', async (req, res) => {
     const data = await Category.aggregate([{
       $lookup: {
@@ -118,7 +119,7 @@ module.exports = app => {
     res.send(data)
   })
 
-  // 文章详情
+  // 获取文章详情
   router.get("/articles/list/:id", async (req, res) => {
     const data = await Article.findById(req.params.id).populate('categories')
     res.send(data)
@@ -168,6 +169,7 @@ module.exports = app => {
     )
     res.send(data)
   })
+  //获取评论
   router.get('/comments/:blogsId', async (req, res) => {
     const comments = await Comment.find().where({
       relateBlogId: req.params.blogsId
@@ -175,11 +177,12 @@ module.exports = app => {
     res.send(comments)
   })
 
-  // 留言
+  // 进行留言
   router.post('/messages', async (req, res) => {
     const data = await Message.create(req.body)
     res.send(data)
   })
+  //获取message
   router.get('/messages', async (req, res) => {
     // console.log("123",await Blogs.findOne({
     //     _id: req.params.blogsId}))

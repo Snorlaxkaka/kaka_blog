@@ -3,8 +3,8 @@
  * 调用方法:sendMail('99 4718917@qq.com','这是测试邮件', 'Hi miqilin,这是一封测试邮件');
  */
 
-const nodemailer = require('nodemailer')
-const smtpTransport = require('nodemailer-smtp-transport')
+const nodemailer = require('nodemailer')  //发送电子邮件的 Node.js 库
+const smtpTransport = require('nodemailer-smtp-transport') //nodemailer 的 SMTP 传输插件。
 const config = {
   email: {
     service: 'QQ', // 邮箱类别，我固定QQ
@@ -13,6 +13,10 @@ const config = {
   },
 }
 
+/**
+ * 创建一个 SMTP 传输实例，用于发送邮件。
+ * @type {Object}
+ */
 sendSmtpTransport = nodemailer.createTransport(
   smtpTransport({
     service: config.email.service,
